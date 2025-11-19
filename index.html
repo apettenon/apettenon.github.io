@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrea Pettenon - Portfolio</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter & Playfair Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'serif': ['Playfair Display', 'serif'],
+                        'sans': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        orange: {
+                            600: '#ea580c', 
+                            700: '#c2410c',
+                        }
+                    },
+                    transitionDuration: {
+                        '800': '800ms',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fdfdfd;
+            color: #1a1a1a;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* --- 1. Blur-Reveal Effect (For Body/Lists) --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            filter: blur(10px);
+            transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+            will-change: opacity, transform, filter;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+
+        /* --- 2. Hero Mask Effect (For Main Title) --- */
+        /* This creates a "clipping" container */
+        .hero-mask {
+            overflow: hidden;
+            display: block;
+            line-height: 1.15; /* Tweak line height to prevent clipping tails */
+            padding-bottom: 0.1em; /* Space for descenders like 'g' or 'p' */
+        }
+
+        /* The text inside starts pushed down out of view */
+        .hero-text {
+            display: block;
+            transform: translateY(100%) rotate(2deg); /* Start lower and slightly rotated */
+            opacity: 0;
+            transform-origin: top left;
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.2s ease;
+        }
+
+        /* When active, it slides up into view */
+        .hero-text.active {
+            transform: translateY(0) rotate(0deg);
+            opacity: 1;
+        }
+
+        /* Stagger delays */
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+        .delay-500 { transition-delay: 500ms; }
+
+        /* Link hover animation */
+        .hover-underline-animation {
+            display: inline-block;
+            position: relative;
+            color: #ea580c;
+        }
+        .hover-underline-animation::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 1px;
+            bottom: 0;
+            left: 0;
+            background-color: #ea580c;
+            transform-origin: bottom right;
+            transition: transform 0.4s cubic-bezier(0.86, 0, 0.07, 1);
+        }
+        .hover-underline-animation:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        ::selection {
+            background: #ea580c;
+            color: white;
+        }
+    </style>
+</head>
+<body class="relative antialiased selection:bg-orange-100 selection:text-orange-900">
+
+    <!-- Nav -->
+    <nav class="absolute top-0 right-0 p-6 sm:p-10 flex space-x-8 z-50 text-sm tracking-wide reveal delay-500">
+        <a href="https://www.linkedin.com/in/your-profile" target="_blank" class="text-gray-500 hover:text-orange-600 transition-colors duration-300 uppercase font-medium tracking-wider text-xs">
+            LinkedIn
+        </a>
+        <a href="https://github.com/apettenon" target="_blank" class="text-gray-500 hover:text-orange-600 transition-colors duration-300 uppercase font-medium tracking-wider text-xs">
+            Github
+        </a>
+    </nav>
+
+    <main class="mx-auto max-w-5xl px-6 sm:px-8 lg:px-12">
+
+        <!-- Hero Section -->
+        <section id="home" class="min-h-[85vh] flex flex-col justify-center items-start">
+            
+            <h1 class="text-6xl md:text-8xl text-gray-900 leading-[1.1] tracking-tight">
+                
+                <!-- Line 1 -->
+                <span class="hero-mask">
+                    <span class="hero-text">Hi, I'm</span>
+                </span>
+                
+                <!-- Line 2 -->
+                <span class="hero-mask">
+                    <span class="hero-text delay-100">
+                        <span class="italic text-orange-600 pr-2">Andrea</span> Pettenon,
+                    </span>
+                </span>
+
+                <!-- Line 3 (Smaller Font) -->
+                <span class="block mt-4 font-normal">
+                    <span class="hero-mask">
+                        <span class="hero-text delay-200 text-4xl md:text-6xl text-gray-400">
+                            an Econ & CS Student
+                        </span>
+                    </span>
+                    <span class="hero-mask">
+                        <span class="hero-text delay-300 text-4xl md:text-6xl text-gray-600 italic">
+                            @ Bocconi.
+                        </span>
+                    </span>
+                </span>
+            </h1>
+
+        </section>
+
+        <!-- Content Container -->
+        <div class="space-y-32 pb-32">
+
+            <!-- About Me -->
+            <section id="about" class="grid md:grid-cols-12 gap-12 border-t border-gray-100 pt-12">
+                <div class="md:col-span-4 reveal">
+                    <h2 class="text-3xl text-gray-900 sticky top-10">About Me</h2>
+                </div>
+                <div class="md:col-span-8 flex flex-col-reverse md:flex-row gap-8 items-start">
+                    <div class="space-y-8 text-lg text-gray-600 font-light leading-relaxed w-full">
+                        
+                        <div class="space-y-4 reveal delay-100">
+                            <p>
+                                Currently studying at <strong class="font-medium text-gray-900">Bocconi</strong> and upcoming exchange student at <strong class="font-medium text-gray-900">SDSU</strong>.
+                            </p>
+                            <p>
+                                Passionate about AI, startups, and great products, but also UX, automotive, photography, and music. I've done two internships in tech consulting and currently serve as Vice President of <a href="https://bainsa.xyz" class="hover-underline-animation text-gray-900">BAINSA</a>.
+                            </p>
+                        </div>
+
+                        <div class="space-y-2 reveal delay-200">
+                            <p class="font-medium text-gray-900 font-sans text-base uppercase tracking-wide">Working on:</p>
+                            <ul class="list-disc list-outside pl-5 space-y-2">
+                                <li>My thesis on <span class="italic text-gray-800">planning methods for F1 strategy and interpretability</span>.</li>
+                                <li>Building the greatest student-led hackathon of Milan: <a href="https://innovaitehackathon.netlify.app/" target="_blank" class="hover-underline-animation font-medium text-orange-600">innovAIte</a>.</li>
+                            </ul>
+                        </div>
+
+                        <div class="pt-6 border-t border-gray-100 reveal">
+                            <p class="text-sm italic text-gray-400 mb-4">Not the best at writing, so I'll leave some quotes here:</p>
+                            <blockquote class="border-l-2 border-orange-600 pl-4 italic text-gray-800 text-xl font-serif">
+                                "The only way to do great work is to love what you do."
+                            </blockquote>
+                            <p class="text-sm text-gray-400 mt-2 not-italic">— Steve Jobs</p>
+                            <p class="text-xs text-gray-300 mt-4">(I'll add others in the future)</p>
+                        </div>
+
+                        <p class="pt-4 text-base text-gray-900 font-medium reveal">
+                            Get in touch: <a href="mailto:andrea.pettenon@studbocconi.it" class="hover-underline-animation">andrea.pettenon [at] studbocconi.it</a>
+                        </p>
+                    </div>
+                    
+                    <!-- Photo -->
+                    <div class="flex-shrink-0 hidden md:block reveal delay-300">
+                        <!-- IMAGE TAG UPDATED HERE -->
+                        <!-- Make sure you upload a file named 'profile.png' to your github root folder! -->
+                        <img 
+                            src="profile.png" 
+                            alt="Andrea Pettenon"
+                            class="w-32 h-32 rounded-full object-cover grayscale hover:grayscale-0 transition duration-500 border border-gray-100 shadow-sm"
+                            onerror="this.style.display='none'" 
+                        />
+                    </div>
+                </div>
+            </section>
+
+            <!-- Work Experience -->
+            <section id="work" class="grid md:grid-cols-12 gap-12 border-t border-gray-100 pt-12">
+                <div class="md:col-span-4 reveal">
+                    <h2 class="text-3xl text-gray-900 sticky top-10">Experience</h2>
+                </div>
+                <div class="md:col-span-8 space-y-16">
+                    
+                    <!-- Accenture -->
+                    <div class="relative pl-8 border-l border-gray-200 reveal delay-100 group">
+                        <span class="absolute -left-[5px] top-2 w-[9px] h-[9px] bg-orange-600 rounded-full transition-transform duration-300 group-hover:scale-150"></span>
+                        <h3 class="text-xl text-gray-900">Data and AI Intern</h3>
+                        <p class="text-orange-600 italic font-serif text-lg">Accenture <span class="text-gray-400 text-base not-italic ml-2 font-sans">| Milan</span></p>
+                        <p class="text-sm text-gray-400 mt-1 mb-3 font-sans uppercase tracking-wider">June 2025 - September 2025</p>
+                        <p class="text-gray-600 font-light leading-relaxed">
+                            Designed a MVP AI agent architecture for a financial institution using LangChain and Pydantic AI. Built core orchestration logic integrating FastAPI and BigQuery.
+                        </p>
+                    </div>
+
+                    <!-- Grant Thornton -->
+                    <div class="relative pl-8 border-l border-gray-200 reveal delay-200 group">
+                        <span class="absolute -left-[5px] top-2 w-[9px] h-[9px] bg-gray-300 rounded-full transition-transform duration-300 group-hover:scale-150 group-hover:bg-orange-600"></span>
+                        <h3 class="text-xl text-gray-900">Data and AI Intern</h3>
+                        <p class="text-orange-600 italic font-serif text-lg">Grant Thornton <span class="text-gray-400 text-base not-italic ml-2 font-sans">| Milan</span></p>
+                        <p class="text-sm text-gray-400 mt-1 mb-3 font-sans uppercase tracking-wider">June 2024 - Sept 2024</p>
+                        <p class="text-gray-600 font-light leading-relaxed">
+                            Prototyped a RAG-based chatbot for marketing content generation. Enhanced Power BI dashboards and automated data flows.
+                        </p>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Leadership -->
+            <section id="leadership" class="grid md:grid-cols-12 gap-12 border-t border-gray-100 pt-12">
+                <div class="md:col-span-4 reveal">
+                    <h2 class="text-3xl text-gray-900 sticky top-10">Leadership</h2>
+                </div>
+                <div class="md:col-span-8 space-y-16">
+                    
+                    <!-- BAINSA -->
+                    <div class="reveal delay-100">
+                        <h3 class="text-xl text-gray-900">Vice President</h3>
+                        <p class="text-orange-600 italic font-serif text-lg">
+                            Bocconi AI & Neuroscience Student Association 
+                            <a href="https://bainsa.xyz" target="_blank" class="hover:underline not-italic">(BAINSA)</a>
+                        </p>
+                        <p class="text-sm text-gray-400 mt-1 mb-3 font-sans uppercase tracking-wider">Dec 2023 - Present</p>
+                        <p class="text-gray-600 font-light leading-relaxed">
+                            Leading 60+ members, some of the brightest minds in Bocconi. Panelist at World AI Cannes Festival (WAICF).
+                        </p>
+                    </div>
+
+                    <!-- Marketing Society -->
+                    <div class="reveal delay-200">
+                        <h3 class="text-xl text-gray-900">Head of Digital</h3>
+                        <p class="text-orange-600 italic font-serif text-lg">Bocconi Student Marketing Society</p>
+                        <p class="text-sm text-gray-400 mt-1 mb-3 font-sans uppercase tracking-wider">Sept 2023 - Sept 2024</p>
+                        <p class="text-gray-600 font-light leading-relaxed">
+                            Coordinated branding and content creation for internal and external clients.
+                        </p>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Projects -->
+            <section id="projects" class="grid md:grid-cols-12 gap-12 border-t border-gray-100 pt-12">
+                <div class="md:col-span-4 reveal">
+                    <h2 class="text-3xl text-gray-900 sticky top-10">Projects</h2>
+                </div>
+                <div class="md:col-span-8 space-y-16">
+                    
+                    <!-- Project 1: Thesis -->
+                    <div class="group reveal">
+                        <div class="flex justify-between items-baseline">
+                            <h3 class="text-2xl text-gray-900 group-hover:text-orange-600 transition-colors duration-300 cursor-default">
+                                Interpretable Planning Methods for Optimal F1 Strategies
+                            </h3>
+                            <span class="text-sm text-orange-600 font-sans font-medium">In Progress</span>
+                        </div>
+                        <p class="mt-3 text-gray-600 font-light leading-relaxed max-w-2xl">
+                            Working on my thesis. Merging a lifelong <span class="italic">Formula 1</span> passion with academic rigor. Developing interpretable planning algorithms to engineer optimal race strategies.
+                        </p>
+                    </div>
+
+                    <!-- Project 2 -->
+                    <div class="group reveal">
+                        <div class="flex justify-between items-baseline">
+                            <h3 class="text-2xl text-gray-900 group-hover:text-orange-600 transition-colors duration-300 cursor-default">
+                                Football Player Market Value Prediction
+                            </h3>
+                            <span class="text-sm text-gray-400 font-sans font-medium">2025</span>
+                        </div>
+                        <p class="mt-3 text-gray-600 font-light leading-relaxed max-w-2xl">
+                            Developed an ensemble ML pipeline (Random Forest, CatBoost, Gradient Boosting) with a binary classifier to model distributional outliers, significantly improving predictive accuracy for high-dimensional player valuation.
+                        </p>
+                        <div class="mt-4 flex gap-6 text-sm font-medium">
+                            <!-- Updated placeholder -->
+                            <a href="https://github.com/apettenon" target="_blank" class="hover-underline-animation">View Code</a>
+                            <a href="https://github.com/apettenon" target="_blank" class="hover-underline-animation">Read Paper</a>
+                        </div>
+                    </div>
+
+                    <!-- Project 3 -->
+                    <div class="group reveal">
+                        <div class="flex justify-between items-baseline">
+                            <h3 class="text-2xl text-gray-900 group-hover:text-orange-600 transition-colors duration-300 cursor-default">
+                                Truncation in Survival Analysis
+                            </h3>
+                            <span class="text-sm text-gray-400 font-sans font-medium">2024</span>
+                        </div>
+                        <p class="mt-3 text-gray-600 font-light leading-relaxed max-w-2xl">
+                            Reviewed key research on truncation effects on bias and statistical inference in time-to-event studies. <span class="text-orange-600 italic">Awarded Best Project in Class.</span>
+                        </p>
+                        <div class="mt-4 flex gap-6 text-sm font-medium">
+                            <!-- Updated placeholder -->
+                            <a href="https://github.com/apettenon" target="_blank" class="hover-underline-animation">Read Paper</a>
+                        </div>
+                    </div>
+
+                    <!-- Project 4 -->
+                    <div class="group reveal">
+                        <div class="flex justify-between items-baseline">
+                            <h3 class="text-2xl text-gray-900 group-hover:text-orange-600 transition-colors duration-300 cursor-default">
+                                3-SAT with Simulated Annealing
+                            </h3>
+                            <span class="text-sm text-gray-400 font-sans font-medium">2024</span>
+                        </div>
+                        <p class="mt-3 text-gray-600 font-light leading-relaxed max-w-2xl">
+                            Implemented Simulated Annealing algorithms to efficiently solve the Boolean satisfiability problem (3-SAT) as part of a CS course project at Bocconi.
+                        </p>
+                        <div class="mt-4 flex gap-6 text-sm font-medium">
+                            <a href="https://github.com/apettenon/3SAT-with-Simulated-Annealing" target="_blank" class="hover-underline-animation">View Code</a>
+                        </div>
+                    </div>
+
+                    <!-- Project 5 -->
+                    <div class="group reveal">
+                        <div class="flex justify-between items-baseline">
+                            <h3 class="text-2xl text-gray-900 group-hover:text-orange-600 transition-colors duration-300 cursor-default">
+                                Solow Model Extensions
+                            </h3>
+                            <span class="text-sm text-gray-400 font-sans font-medium">2024</span>
+                        </div>
+                        <p class="mt-3 text-gray-600 font-light leading-relaxed max-w-2xl">
+                            Explored and modeled extensions to the neoclassical Solow-Swan economic growth model using R.
+                        </p>
+                        <div class="mt-4 flex gap-6 text-sm font-medium">
+                            <a href="https://github.com/apettenon/Solow-Model-Extensions" target="_blank" class="hover-underline-animation">View Code</a>
+                        </div>
+                    </div>
+
+                    <!-- Project 6 -->
+                    <div class="group reveal">
+                        <div class="flex justify-between items-baseline">
+                            <h3 class="text-2xl text-gray-900 group-hover:text-orange-600 transition-colors duration-300 cursor-default">
+                                Blackjack RL Agent
+                            </h3>
+                            <span class="text-sm text-gray-400 font-sans font-medium">2024</span>
+                        </div>
+                        <p class="mt-3 text-gray-600 font-light leading-relaxed max-w-2xl">
+                            Developed a Reinforcement Learning agent to play Blackjack, demonstrating key concepts in Monte Carlo methods and policy optimization.
+                        </p>
+                        <div class="mt-4 flex gap-6 text-sm font-medium">
+                            <a href="https://github.com/apettenon/Blackjack-RL" target="_blank" class="hover-underline-animation">View Code</a>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Some Random Things -->
+            <section id="random" class="grid md:grid-cols-12 gap-12 border-t border-gray-100 pt-12">
+                <div class="md:col-span-4 reveal">
+                    <h2 class="text-3xl text-gray-900 sticky top-10">Some Random Things</h2>
+                </div>
+                <div class="md:col-span-8 space-y-10 reveal delay-100">
+                    
+                    <!-- Licet -->
+                    <div>
+                        <h3 class="text-xl text-gray-900">Licet Magazine</h3>
+                        <p class="text-gray-600 font-light mt-2 leading-relaxed">
+                            Co-Director and Graphic Designer of <span class="italic">Licet</span>, my high school student magazine. Had a lot of fun designing layouts with Adobe InDesign.
+                        </p>
+                    </div>
+
+                    <!-- Books -->
+                    <div>
+                        <h3 class="text-xl text-gray-900">Books I Like</h3>
+                        <p class="text-gray-600 font-light mt-2 mb-4">I enjoy biographies. Some of my favorites:</p>
+                        <ul class="space-y-3 text-gray-600 font-light list-disc pl-5">
+                            <li><span class="font-medium text-gray-900 italic font-serif">Open</span> by Andre Agassi</li>
+                            <li><span class="font-medium text-gray-900 italic font-serif">Steve Jobs</span> by Walter Isaacson</li>
+                            <li><span class="font-medium text-gray-900 italic font-serif">Shoe Dog</span> by Phil Knight</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+        
+        <!-- Minimal Footer -->
+        <footer class="border-t border-gray-200 py-8 text-center text-xs text-gray-400 uppercase tracking-widest font-sans reveal">
+            © 2025 Andrea Pettenon
+        </footer>
+
+    </main>
+
+    <!-- The Script that triggers the effects -->
+    <script>
+        // Logic to handle re-triggering animation on scroll
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Add active class to trigger animation
+                    entry.target.classList.add('active');
+                    // For the hero text, specifically target children
+                    if (entry.target.querySelector('.hero-text')) {
+                         entry.target.querySelectorAll('.hero-text').forEach(el => el.classList.add('active'));
+                    }
+                } else {
+                    // Remove active class to reset animation state
+                    entry.target.classList.remove('active');
+                    if (entry.target.querySelector('.hero-text')) {
+                         entry.target.querySelectorAll('.hero-text').forEach(el => el.classList.remove('active'));
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observe standard reveal elements
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Observe the Hero Mask elements specifically
+        document.querySelectorAll('.hero-mask').forEach(el => {
+            // We observe the mask container, but animate the inner text
+            observer.observe(el);
+        });
+    </script>
+
+</body>
+</html>
